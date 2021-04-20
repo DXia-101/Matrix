@@ -1,0 +1,70 @@
+#include <iostream>
+#include<iomanip>
+
+
+int main() {
+	size_t rows1{}, columns1{};
+	std::cout << "How many rows and columns?" << std::endl;
+	std::cin >> rows1 >> columns1;//输入第一个矩阵的行列数
+	if (rows1 == 0 || columns1 == 0)//如果行列数为0，则不进行计算
+		return 0;
+	double** matrix1{ new double*[rows1] };//matrix1数组是double*指针的一个动态数组，每个double*指针包含一个double数组的地址
+	for (size_t i = 0; i < rows1; ++i) {
+		matrix1[i] = new double [columns1] {};//矩阵的行
+	}
+	for (size_t i{}; i < rows1; ++i) {
+		for (size_t j{}; j < columns1; ++j) {
+			std::cout << "Please enter the value of row " << i+1 << " and column " << j+1 << std::endl;
+			std::cin >> matrix1[i][j];//输入矩阵第【i+1，j+1】的值
+		}
+	}
+	size_t rows2{}, columns2{};
+	std::cout << "How many rows and columns?" << std::endl;
+	std::cin >> rows2 >> columns2;//输入第二个矩阵的行列数
+	if (rows2 == 0 || columns2 == 0)//如果行列数为0，则不进行计算
+		return 0;
+	double** matrix2{ new double*[rows2] };//matrix2数组是double*指针的一个动态数组，每个double*指针包含一个double数组的地址
+	for (size_t i = 0; i < rows2; ++i) {
+		matrix2[i] = new double [columns2] {};//矩阵的行
+	}
+	for (size_t i{}; i < rows2; ++i) {
+		for (size_t j{}; j < columns2; ++j) {
+			std::cout << "Please enter the value of row " << i+1 << " and column " << j+1 << std::endl;
+			std::cin >> matrix2[i][j];// 输入矩阵第【i + 1，j + 1】的值
+		}
+	}
+	if (columns1 != rows2) {
+		std::cout << "The two matrices cannot be multiplied.Please re-enter.";//判定第一个矩阵的列数是否等于第二个矩阵的行数
+		return 0;
+	}
+	double** matrix3{ new double*[columns1] };//将第一个矩阵的列数作为第三个矩阵的行数
+	for (size_t i = 0; i < columns1; ++i) {
+		matrix2[i] = new double [rows2] {};//将第二个矩阵的行数作为第三个矩阵的列数
+	}
+	double* pvalue{ new double{ } };//设置一个中间值方便计算
+	for (size_t i{}; i < rows1; ++i) {
+		for (size_t j{}; j < columns2; ++j) {
+			for (size_t k{}; k < columns1; ++k) {
+			*pvalue = (matrix1[i][k] * matrix2[k][j]);//计算第一个矩阵第[i][k]个元素和第二个矩阵第[k][j]个元素的乘积
+			matrix3[i][j] += *pvalue;//第三个元素第[i][j]个元素的值等于k个*pavlue的值的和
+			}
+		}
+	}
+	delete pvalue;//删除pvalue
+	pvalue = nullptr;//重设指针
+	for (size_t i{ }; i < columns1; ++i) {
+		for(size_t j{ }; j < rows2; ++j){
+			std::cout << std::setw(12) << matrix3;
+		}
+		std::cout << std::endl;
+	}//遍历输出第3个矩阵
+	for (size_t i{}; i < rows1; ++i)
+		delete[] matrix1[i];//删除第一个矩阵的列
+	delete[] matrix1;//删除第一个矩阵
+	for (size_t i{}; i < rows2; ++i)
+		delete[] matrix2[i];//删除第二个矩阵的列
+	delete[] matrix2;//删除第二个矩阵
+	for (size_t i{}; i < rows2; ++i)
+		delete[] matrix3[i];//删除第二个矩阵的列
+	delete[] matrix3;//删除第二个矩阵
+}
