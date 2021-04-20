@@ -39,7 +39,7 @@ int main() {
 	}
 	double** matrix3{ new double*[columns1] };//将第一个矩阵的列数作为第三个矩阵的行数
 	for (size_t i = 0; i < columns1; ++i) {
-		matrix2[i] = new double [rows2] {};//将第二个矩阵的行数作为第三个矩阵的列数
+		matrix3[i] = new double [rows2] {};//将第二个矩阵的行数作为第三个矩阵的列数
 	}
 	double* pvalue{ new double{ } };//设置一个中间值方便计算
 	for (size_t i{}; i < rows1; ++i) {
@@ -52,9 +52,9 @@ int main() {
 	}
 	delete pvalue;//删除pvalue
 	pvalue = nullptr;//重设指针
-	for (size_t i{ }; i < columns1; ++i) {
-		for(size_t j{ }; j < rows2; ++j){
-			std::cout << std::setw(12) << matrix3;
+	for (size_t i{ }; i < rows1; ++i) {
+		for(size_t j{ }; j < columns2; ++j){
+			std::cout << std::setw(12) << matrix3[i][j];
 		}
 		std::cout << std::endl;
 	}//遍历输出第3个矩阵
